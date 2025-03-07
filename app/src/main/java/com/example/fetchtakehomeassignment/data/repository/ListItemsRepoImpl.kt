@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.fetchtakehomeassignment.data.mappers.mapToListItem
 import com.example.fetchtakehomeassignment.data.remote.ListItemsService
 import com.example.fetchtakehomeassignment.domain.model.ListItem
+import com.example.fetchtakehomeassignment.domain.repository.ListItemsRepo
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -11,8 +12,8 @@ import retrofit2.Response
 
 class ListItemsRepoImpl(
     private val listItemsService: ListItemsService
-) {
-    suspend fun getListItems(): Response<List<ListItem>?> {
+) : ListItemsRepo {
+    override suspend fun getListItems(): Response<List<ListItem>?> {
         try {
             listItemsService.getListItems().let { response ->
                 if (response.isSuccessful) {
@@ -38,6 +39,6 @@ class ListItemsRepoImpl(
 }
 
 // Helper function to create a ResponseBody for error case
-private fun createErrorResponseBody(errorMessage: String): ResponseBody {
+fun createErrorResponseBody(errorMessage: String): ResponseBody {
     return errorMessage.toResponseBody("application/json".toMediaTypeOrNull())
 }

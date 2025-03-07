@@ -15,6 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.fetchtakehomeassignment.data.remote.ListItemsService
 import com.example.fetchtakehomeassignment.data.repository.ListItemsRepoImpl
 import com.example.fetchtakehomeassignment.data.util.RetrofitClient
+import com.example.fetchtakehomeassignment.domain.repository.ListItemsRepo
+import com.example.fetchtakehomeassignment.domain.usecase.GetListItemsSortedUseCase
 import com.example.fetchtakehomeassignment.ui.theme.FetchTakeHomeAssignmentTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,17 +42,13 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         CoroutineScope(Dispatchers.IO).launch {
             Log.e("TEST", "Isiah - do it!")
-            val response = ListItemsRepoImpl(
+            val repository : ListItemsRepo = ListItemsRepoImpl(
                 RetrofitClient.retrofit.create(ListItemsService::class.java)
-            ).getListItems()
+            )
 
-            if (response.isSuccessful) {
-                response.body()?.forEach {
-                    Log.e("TEST", "Isaiah - $it")
-                }
-            } else {
-                Log.e("TEST", "Isiah - dar it!!")
-            }
+            val useCase = GetListItemsSortedUseCase(repository)
+            Log.e("TEST", "Isaiah - hell yeaaahhhh")
+            useCase()
         }
     }
 }
