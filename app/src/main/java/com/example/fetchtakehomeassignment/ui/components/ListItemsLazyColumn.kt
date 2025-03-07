@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.fetchtakehomeassignment.R
 import com.example.fetchtakehomeassignment.domain.model.ListItem
+import com.example.fetchtakehomeassignment.ui.util.getString
 
 @Composable
 fun ListItemsLazyColumn(
@@ -39,6 +41,6 @@ fun ListItemsLazyColumn(
             }
         }
     } else {
-        Text("Loading...")
+        Text(getString(R.string.loading))
     }
 }

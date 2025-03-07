@@ -13,6 +13,11 @@ class ListItemsViewModel(
     private val getListItemsSortedUseCase: GetListItemsSortedUseCase
 ) : ViewModel() {
 
+    companion object {
+        private const val UNEXPECTED_ERROR_OCCURED = "An unexpected error occurred: "
+        private const val EMPTY_RESPONSE_BODY = "Empty response body"
+    }
+
     private val _listItems = MutableLiveData<ListItemsUIState>(ListItemsUIState.Empty)
     val listItems: MutableLiveData<ListItemsUIState> get() = _listItems
 
@@ -24,7 +29,7 @@ class ListItemsViewModel(
                 val response = getListItemsSortedUseCase()
                 processResponse(response)
             } catch (e: Exception) {
-                _listItems.postValue(ListItemsUIState.Error("An unexpected error occurred: ${e.message}"))
+                _listItems.postValue(ListItemsUIState.Error(UNEXPECTED_ERROR_OCCURED + e.message))
             }
         }
     }
@@ -38,7 +43,7 @@ class ListItemsViewModel(
                     _listItems.postValue(ListItemsUIState.Empty)
                 }
             } ?: run {
-                _listItems.postValue(ListItemsUIState.Error("Empty response body"))
+                _listItems.postValue(ListItemsUIState.Error(EMPTY_RESPONSE_BODY))
             }
         } else {
             _listItems.postValue(ListItemsUIState.Error(response.message()))

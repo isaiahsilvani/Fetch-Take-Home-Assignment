@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FetchTakeHomeAssignment</string>
+    <string name="list_id">List ID:</string>
+    <string name="name">Name:</string>
+    <string name="id">ID:</string>
+    <string name="na">N/A</string>
+    <string name="loading">Loading…</string>
+    <string name="no_items_found">No items found.</string>
+    <string name="unexpected_error">An unexpected error occurred: %1$s</string>
+    <string name="empty_response">Empty response body</string>
 </resources>

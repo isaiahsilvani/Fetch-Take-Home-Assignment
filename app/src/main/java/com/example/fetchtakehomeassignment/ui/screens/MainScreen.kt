@@ -9,8 +9,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.fetchtakehomeassignment.R
 import com.example.fetchtakehomeassignment.ui.components.CenteredCircularProgressIndicator
 import com.example.fetchtakehomeassignment.ui.components.ListItemsLazyColumn
+import com.example.fetchtakehomeassignment.ui.util.getString
 import com.example.fetchtakehomeassignment.ui.viewmodels.ListItemsUIState
 import com.example.fetchtakehomeassignment.ui.viewmodels.ListItemsViewModel
 
@@ -39,7 +41,7 @@ fun MainScreen(
             }
             is ListItemsUIState.Empty -> {
                 Text(
-                    text = "No items found.",
+                    text = getString(R.string.empty_response),
                     modifier = Modifier
                         .align(Alignment.Center)
                         .padding(16.dp)

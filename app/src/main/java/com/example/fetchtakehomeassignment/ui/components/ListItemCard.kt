@@ -14,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.fetchtakehomeassignment.R
+import com.example.fetchtakehomeassignment.ui.util.getString
 
 @Composable
 fun ListItemCard(
@@ -37,7 +39,7 @@ fun ListItemCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("List ID:", style = MaterialTheme.typography.labelMedium)
+                Text(getString(R.string.list_id), style = MaterialTheme.typography.labelMedium)
                 Text(listId.toString(), style = MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(4.dp))
@@ -45,15 +47,15 @@ fun ListItemCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Name:", style = MaterialTheme.typography.labelMedium)
-                Text(name ?: "N/A", style = MaterialTheme.typography.bodyMedium)
+                Text(getString(R.string.name), style = MaterialTheme.typography.labelMedium)
+                Text(name ?: getString(R.string.na), style = MaterialTheme.typography.bodyMedium)
             }
             Spacer(modifier = Modifier.height(4.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("ID:", style = MaterialTheme.typography.labelMedium)
+                Text(getString(R.string.id), style = MaterialTheme.typography.labelMedium)
                 Text(id.toString(), style = MaterialTheme.typography.bodyMedium)
             }
         }
