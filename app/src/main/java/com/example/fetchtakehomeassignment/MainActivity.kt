@@ -1,6 +1,7 @@
 package com.example.fetchtakehomeassignment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,7 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.fetchtakehomeassignment.data.remote.ListItemsService
+import com.example.fetchtakehomeassignment.data.repository.ListItemsRepoImpl
+import com.example.fetchtakehomeassignment.data.util.RetrofitClient
 import com.example.fetchtakehomeassignment.ui.theme.FetchTakeHomeAssignmentTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +32,24 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.e("TEST", "Isiah - do it!")
+            val response = ListItemsRepoImpl(
+                RetrofitClient.retrofit.create(ListItemsService::class.java)
+            ).getListItems()
+
+            if (response.isSuccessful) {
+                response.body()?.forEach {
+                    Log.e("TEST", "Isaiah - $it")
+                }
+            } else {
+                Log.e("TEST", "Isiah - dar it!!")
             }
         }
     }
