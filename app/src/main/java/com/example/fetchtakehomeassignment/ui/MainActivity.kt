@@ -20,6 +20,7 @@ import com.example.fetchtakehomeassignment.data.util.RetrofitClient
 import com.example.fetchtakehomeassignment.domain.repository.ListItemsRepo
 import com.example.fetchtakehomeassignment.domain.usecase.GetListItemsSortedUseCase
 import com.example.fetchtakehomeassignment.ui.components.ListItemsLazyColumn
+import com.example.fetchtakehomeassignment.ui.screens.MainScreen
 import com.example.fetchtakehomeassignment.ui.theme.FetchTakeHomeAssignmentTheme
 import com.example.fetchtakehomeassignment.ui.viewmodels.ListItemsViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -38,14 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FetchTakeHomeAssignmentTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-
-                    val state = listItemsViewModel.listItems.observeAsState()
-
-                    ListItemsLazyColumn(state.value)
+                    MainScreen(modifier = Modifier.padding(innerPadding), listItemsViewModel)
                 }
             }
         }
