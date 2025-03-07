@@ -5,7 +5,6 @@ import com.example.fetchtakehomeassignment.domain.model.ListItem
 import com.example.fetchtakehomeassignment.domain.repository.ListItemsRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import retrofit2.Response
 
 /**

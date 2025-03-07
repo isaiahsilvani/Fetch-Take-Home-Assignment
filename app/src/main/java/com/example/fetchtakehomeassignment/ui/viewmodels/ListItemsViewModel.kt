@@ -1,6 +1,5 @@
 package com.example.fetchtakehomeassignment.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,26 +7,41 @@ import com.example.fetchtakehomeassignment.domain.model.ListItem
 import com.example.fetchtakehomeassignment.domain.usecase.GetListItemsSortedUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class ListItemsViewModel(
     private val getListItemsSortedUseCase: GetListItemsSortedUseCase
 ) : ViewModel() {
 
-    private val _listItems = MutableLiveData(listOf<ListItem>())
-    val listItems get() = _listItems
+    private val _listItems = MutableLiveData<ListItemsUIState>(ListItemsUIState.Empty)
+    val listItems: MutableLiveData<ListItemsUIState> get() = _listItems
 
     fun getListItems() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = getListItemsSortedUseCase()
-            if (result.isSuccessful) {
-                Log.e("TEST", "Isaiah - SUCCESSFULL!!!")
-                result.body()?.let {
-                    _listItems.postValue(it)
-                }
-            } else {
-                Log.e("TEST", "Isaiah - not even successfulll")
+            _listItems.postValue(ListItemsUIState.Loading) // Set loading state
+
+            try {
+                val response = getListItemsSortedUseCase()
+                processResponse(response)
+            } catch (e: Exception) {
+                _listItems.postValue(ListItemsUIState.Error("An unexpected error occurred: ${e.message}"))
             }
         }
     }
 
+    private fun processResponse(response: Response<List<ListItem>>) {
+        if (response.isSuccessful) {
+            response.body()?.let { data ->
+                if (data.isNotEmpty()){
+                    _listItems.postValue(ListItemsUIState.Success(data))
+                } else {
+                    _listItems.postValue(ListItemsUIState.Empty)
+                }
+            } ?: run {
+                _listItems.postValue(ListItemsUIState.Error("Empty response body"))
+            }
+        } else {
+            _listItems.postValue(ListItemsUIState.Error(response.message()))
+        }
+    }
 }
