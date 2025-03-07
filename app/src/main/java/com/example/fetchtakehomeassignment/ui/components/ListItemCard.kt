@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fetchtakehomeassignment.R
 import com.example.fetchtakehomeassignment.ui.util.getString
@@ -60,4 +61,10 @@ fun ListItemCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewListItemCard() {
+    ListItemCard("Item 121", 12, 132)
 }
