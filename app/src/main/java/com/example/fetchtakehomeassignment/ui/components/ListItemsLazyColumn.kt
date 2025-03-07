@@ -26,7 +26,7 @@ fun ListItemsLazyColumn(
     if (listItems != null) {
         Surface {
             LazyVerticalGrid(
-                columns = GridCells.Fixed(2), // 2 columns
+                columns = GridCells.Fixed(2),
                 modifier = modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),

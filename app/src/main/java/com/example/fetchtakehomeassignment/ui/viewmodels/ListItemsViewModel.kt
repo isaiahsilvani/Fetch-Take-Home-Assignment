@@ -21,9 +21,12 @@ class ListItemsViewModel(
     private val _listItems = MutableLiveData<ListItemsUIState>(ListItemsUIState.Empty)
     val listItems: MutableLiveData<ListItemsUIState> get() = _listItems
 
+    /**
+     * Get list of [ListItem]'s from the Fetch API
+     */
     fun getListItems() {
         viewModelScope.launch(Dispatchers.IO) {
-            _listItems.postValue(ListItemsUIState.Loading) // Set loading state
+            _listItems.postValue(ListItemsUIState.Loading)
 
             try {
                 val response = getListItemsSortedUseCase()
@@ -34,6 +37,9 @@ class ListItemsViewModel(
         }
     }
 
+    /**
+     * Process the response from the Fetch API
+     */
     private fun processResponse(response: Response<List<ListItem>>) {
         if (response.isSuccessful) {
             response.body()?.let { data ->
