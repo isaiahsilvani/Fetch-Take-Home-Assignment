@@ -5,6 +5,7 @@ import com.example.fetchtakehomeassignment.domain.model.ListItem
 import com.example.fetchtakehomeassignment.domain.repository.ListItemsRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import retrofit2.Response
 
 /**
@@ -17,7 +18,6 @@ class GetListItemsSortedUseCase(
     suspend operator fun invoke(): Response<List<ListItem>> {
         val response = listItemsRepo.getListItems()
         if (response.isSuccessful) {
-            // switch to Default thread, which is optimized for long-running operations
             return withContext(Dispatchers.Default) {
                 val items = response.body()
                     ?.filter { !it.name.isNullOrEmpty() }
@@ -25,7 +25,7 @@ class GetListItemsSortedUseCase(
                     ?.entries
                     ?.sortedBy { it.key } // Sort by listId (key)
                     ?.flatMap { (_, group) ->
-                        group.sortedBy { it.name } // Sort within each group by name
+                        group.sortedBy { it.id }
                     }
 
                 Response.success(items)
