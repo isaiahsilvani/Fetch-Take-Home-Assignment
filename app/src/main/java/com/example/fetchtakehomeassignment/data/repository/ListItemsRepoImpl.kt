@@ -20,7 +20,6 @@ class ListItemsRepoImpl(
                     val listItems = response.body()?.map {
                         it.mapToListItem()
                     }
-                    Log.e("TEST", "Isaiah - success!")
                     return Response.success(listItems)
                 } else {
                     // Capture and convert the error body to string.
